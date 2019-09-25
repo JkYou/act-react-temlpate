@@ -15,6 +15,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^1.0.1",
+    "compression-webpack-plugin": "^3.0.0",
     "concurrently": "^4.1.2",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.0",
@@ -33,6 +34,8 @@
     "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.3",
+    "webpack-bundle-analyzer": "^3.5.1",
+    "webpack-bundle-size-analyzer": "^3.1.0",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.2.1"
@@ -42,9 +45,16 @@
     "start": "webpack-dev-server --mode development --config build/webpack.dev.js",
     "build": "webpack --progress --colors --mode production --config build/webpack.prod.js",
     "mock": "mocker ./data/index.js",
-    "dev":"concurrently \"npm run mock\" \"npm run start\""
+    "dev": "concurrently \"npm run mock\" \"npm run start\""
   },
-  "browserslist": ["last 1 chrome version","last 1 firfox version","last 1 safari version"],
+  "browserslist": [
+    "defaults",
+    "not ie < 11",
+    "last 2 versions",
+    "> 1%",
+    "iOS 7",
+    "last 3 iOS versions"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

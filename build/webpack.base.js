@@ -1,8 +1,8 @@
 const webpack = require('webpack');
-const path = require('path') // 引入‘path’，为了在这里使用绝对路径，避免相对路径在不同系统时出现不必要的问题
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CleanWebpackPlugin = require("clean-webpack-plugin")
-const htmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path') ;// 引入‘path’，为了在这里使用绝对路径，避免相对路径在不同系统时出现不必要的问题
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const htmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function resolve(dir) {

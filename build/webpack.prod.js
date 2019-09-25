@@ -1,10 +1,11 @@
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base');
-const webpack = require('webpack')
+const CompressionPlugin =require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
 //打包用时间戳
 let date = new Date();
 let
@@ -30,6 +31,13 @@ module.exports = merge(baseWebpackConfig, {
       sourceMap: true
     }),
     new OptimizeCSSAssetsPlugin({}), // 压缩css
+    new CompressionPlugin({ //gzip
+      test: /\.js|css/,
+      filename: '[path].gz[query]',
+      algorithm: 'gzip',
+      threshold: 10240,
+      minRatio: 0.8
+    }),
     //打包zip
     new FileManagerPlugin({
       onEnd: {
@@ -39,7 +47,9 @@ module.exports = merge(baseWebpackConfig, {
           destination: `./zip/swy${timeStr}.zip`
         }]
       }
-    })
+    }),
+      new BundleAnalyzerPlugin() //打包大小分析
+
   ],
   optimization:{
     //  分包
@@ -84,4 +94,5 @@ module.exports = merge(baseWebpackConfig, {
       }
     }
   }
+
 });
