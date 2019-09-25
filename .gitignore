@@ -3,4 +3,4 @@ zip
 dist
 .idea
 .vscode
-.idea/*
+.idea/
