@@ -15,6 +15,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^1.0.1",
+    "concurrently": "^4.1.2",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.0",
     "file-loader": "^3.0.1",
@@ -38,10 +39,12 @@
   },
   "scripts": {
     "server": "webpack-dev-server --open",
-    "dev": "webpack-dev-server --mode development --config build/webpack.dev.js",
+    "start": "webpack-dev-server --mode development --config build/webpack.dev.js",
     "build": "webpack --progress --colors --mode production --config build/webpack.prod.js",
-    "mock":"mocker ./data/index.js"
+    "mock": "mocker ./data/index.js",
+    "dev":"concurrently \"npm run mock\" \"npm run start\""
   },
+  "browserslist": {"production": [">0.2%","not dead","not op_mini all"],"development": ["last 1 chrome version","last 1 firfox version","last 1 safari version"]},
   "keywords": [],
   "author": "",
   "license": "ISC",

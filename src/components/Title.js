@@ -6,7 +6,7 @@ export default class Title extends Component {
     }
     render(){
         return (<Fragment>
-            <p>react-webpack 活动模板 </p>
+            <p>swy-react-webpack 活动模板 </p>
         </Fragment>)
     }
 }
