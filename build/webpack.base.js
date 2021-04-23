@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const path = require('path') ;// 引入‘path’，为了在这里使用绝对路径，避免相对路径在不同系统时出现不必要的问题
+const path = require('path'); // 引入‘path’，为了在这里使用绝对路径，避免相对路径在不同系统时出现不必要的问题
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const htmlWebpackPlugin = require('html-webpack-plugin');
@@ -11,7 +11,7 @@ function resolve(dir) {
 module.exports = {
   // 应用入口
   entry: {
-    app: path.join(__dirname, '../src/app.js') // app.js作为打包的入口
+    app: path.join(__dirname, '../src/app.tsx') // app.js作为打包的入口
   },
   // 输出目录
   output: {
@@ -21,40 +21,64 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['.js', '.json'],
-    alias: {//别名
+    extensions: ['.ts', '.tsx', '.js', '.json'],
+    alias: { //别名
       '@static': resolve('src/static'),
       '@assets': resolve('src/assets'),
-      '@com':resolve('src/components')
+      '@com': resolve('src/components')
     }
   },
   module: {
-    rules: [{
-        test: /.js$/,
-        loader: 'babel-loader'
-      }, {
-        test: /.(js)$/,
-        loader: 'babel-loader',
-        exclude: [
-          path.join(__dirname, '../node_modules')
-        ]
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: [
+            {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env', '@babel/react'],
+                    plugins: [
+                        [
+                          "@babel/plugin-proposal-decorators", 
+                          { "legacy": true }
+                        ]
+                    ]
+                }
+            }
+        ],
+        include: path.resolve(__dirname, 'src'),
+        exclude: /node_modules/
+    },{
+        test: /\.(tsx|ts)$/,
+        use: 'ts-loader'
       }, {
         test: /\.(less|css)$/,
         use: [{
-          loader: "style-loader",options: { sourceMap: true }
-        }, {
-          loader: MiniCssExtractPlugin.loader
-        }, {
-          loader: "css-loader",
-          options: {
-            sourceMap: true
+            loader: "style-loader",
+            options: {
+              sourceMap: true
+            }
+          }, {
+            loader: MiniCssExtractPlugin.loader
+          }, {
+            loader: "css-loader",
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true
+            }
           }
-        },
-        {loader:'postcss-loader',options: { sourceMap: true }},
-        {
-          loader: 'less-loader',
-          options: { sourceMap: true }
-        }]
+        ]
       }, {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -86,9 +110,9 @@ module.exports = {
       root: path.resolve(__dirname, '..'),
       dry: false // 启用删除文件
     }),
-    
+
     new webpack.optimize.RuntimeChunkPlugin({
-        name: "common" // 指定公共 bundle 的名称
+      name: "common" // 指定公共 bundle 的名称
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[chunkhash:8].css',
